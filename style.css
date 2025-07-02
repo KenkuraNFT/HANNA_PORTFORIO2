@@ -1,7 +1,7 @@
 /* --- VARIABLES --------------------------------------------- */
 :root {
     --primary-color: #ff6b6b;
-    --color-text: #1a1a1a;
+    --color-text: #000000;
     --color-bg: #ffffff;
     --color-border: #e0e0e0;
     --container-max-width: 1100px;
@@ -24,7 +24,7 @@ html {
 body {
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 1.8;
-    color: var(--primary-color);
+    color: var(--color-text);
     overflow-x: hidden;
 }
 
@@ -44,6 +44,39 @@ body {
     transition: box-shadow var(--transition);
 }
 
+/* Burger Button */
+.burger {
+    display: none;
+    width: 40px;
+    height: 40px;
+    font-size: 2rem;
+    line-height: 1;
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    z-index: 1100;
+}
+
+/* モバイル表示時のみハンバーガーを表示 */
+@media (max-width: 768px) {
+    .burger {
+        display: block;
+    }
+}
+
+/* デスクトップ表示時はハンバーガーを完全に非表示 */
+@media (min-width: 769px) {
+    .burger {
+        display: none !important;
+        visibility: hidden;
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+    }
+}
+
 .header__logo {
     font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 700;
@@ -59,7 +92,7 @@ body {
 .header__logo h1 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: #000000;
     font-family: 'Inter', sans-serif;
 }
 
@@ -114,7 +147,7 @@ body {
 }
 
 .nav-link {
-    color: var(--primary-color);
+    color: var(--color-text);
     text-decoration: none;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
@@ -124,7 +157,7 @@ body {
 }
 
 .nav-link:hover {
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
 
 /* Hero */
@@ -181,7 +214,7 @@ body {
 }
 
 .social-link {
-    color: var(--color-text);
+    color: var(--color-text) !important;
     font-size: 1.5rem;
     display: flex;
     align-items: center;
@@ -200,23 +233,28 @@ body {
     transform: translateY(-2px);
 }
 
-.social-link:hover i {
-    color: inherit !important;
-}
-
-.social-link:focus, .social-link:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    -webkit-tap-highlight-color: transparent !important;
-    -webkit-focus-ring-color: transparent !important;
-}
-
 .social-link i {
     display: block;
     width: 100%;
     height: 100%;
     font-size: 1.5rem;
+    color: var(--color-text) !important;
+    transition: color 0.3s ease;
+}
+
+.social-link:hover i {
+    color: var(--primary-color) !important;
+}
+
+/* Font Awesomeのデフォルトスタイルをオーバーライド */
+.fab.fa-x-twitter,
+.fab.fa-instagram {
+    color: var(--color-text) !important;
+}
+
+.fab.fa-x-twitter:hover,
+.fab.fa-instagram:hover {
+    color: var(--primary-color) !important;
 }
 
 /* ENTERボタンのスタイリング */
@@ -233,27 +271,19 @@ body {
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     outline: none;
+    transition: all 0.3s ease;
 }
 
-.enter-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--color-text);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
+.enter-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
-.enter-btn:hover::before {
-    transform: scaleX(1);
+.enter-btn:hover .enter-btn__icon {
+    transform: translateX(4px);
 }
 
 .enter-btn__icon {
@@ -287,8 +317,10 @@ button {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-size: 2.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     text-align: center;
+    position: relative;
+    z-index: 2;
 }
 
 /* Profile Timeline */
@@ -336,9 +368,9 @@ button {
 
 /* Gallery */
 .gallery {
-    padding: var(--gap);
-    background-color: #1a1a1a;
-    color: white;
+    padding: 8rem var(--gap) 4rem;
+    background-color: #ffffff;
+    color: var(--color-text);
     position: relative;
     overflow: hidden;
 }
@@ -350,17 +382,30 @@ button {
     margin-bottom: 2rem;
     flex-wrap: wrap;
     justify-content: center;
+    position: relative;
+    z-index: 2;
 }
 
 .filter-btn {
     padding: 0.5rem 1rem;
-    background: #2d2d2d;
-    border: none;
+    background: white;
+    border: 1px solid #e0e0e0;
     border-radius: 4px;
-    color: white;
+    color: var(--color-text);
     cursor: pointer;
     transition: var(--transition);
     font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+    background: #f5f5f5;
+    color: var(--primary-color);
+}
+
+.filter-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
 }
 
 .filter-btn:hover {
@@ -369,7 +414,7 @@ button {
 
 .filter-btn.active {
     background: #ff6b6b;
-    color: white;
+    color: var(--color-text);
 }
 
 /* Gallery Container */
@@ -459,7 +504,7 @@ button {
 .gallery__item figcaption {
     margin-top: 8px;
     font-size: 0.9rem;
-    color: #ccc;
+    color: white;
     padding: 0 10px;
     text-align: center;
     position: absolute;
@@ -474,10 +519,14 @@ button {
     transition: opacity 0.3s ease;
     z-index: 10;
     pointer-events: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    line-height: 1.4;
+    letter-spacing: 0.5px;
 }
 
 .gallery__item:hover figcaption {
     opacity: 1;
+    background: rgba(0, 0, 0, 0.9);
 }
 
 @media(max-width: 1023px) {
@@ -496,7 +545,7 @@ button {
 .about {
     padding: var(--gap);
     background-color: white;
-    color: var(--primary-color);
+    color: var(--color-text);
 }
 
 .about__content {
